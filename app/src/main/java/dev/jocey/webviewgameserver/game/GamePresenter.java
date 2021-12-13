@@ -38,4 +38,12 @@ public class GamePresenter {
     public String getScore() {
         return String.valueOf(model.getScore());
     }
+
+    public void saveSession(String game) {
+        model.saveSession(game);
+    }
+
+    public void cleanPreference() {
+        model.cleanPerfomance();
+    }
 }

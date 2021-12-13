@@ -8,6 +8,7 @@ public class ModelPreference {
     private static final String AMOUNT = "amount_of_starts";
     private static final String LAST = "last_session";
     private static final String SCORE = "score";
+    private static final String LINK = "link";
 
 
     public ModelPreference(SharedPreferences settings) {
@@ -25,6 +26,10 @@ public class ModelPreference {
         editor.apply();
     }
 
+    public void saveSession(String session) {
+        settings.edit().putString(LAST, session).apply();
+    }
+
     public String getLastSession() {
         return settings.getString(LAST, "some");
     }
@@ -34,13 +39,26 @@ public class ModelPreference {
         Log.d("myLog", "score" + amount);
 
         SharedPreferences.Editor editor = settings.edit();
-        editor.putInt(AMOUNT, amount);
+        editor.putInt(SCORE, amount);
         editor.apply();
         Log.d("myLog", "updated score");
 
     }
 
     public Integer getScore() {
+        Log.d("myLog", " is " + settings.contains(SCORE));
         return settings.getInt(SCORE, 0);
+    }
+
+    public String getLink() {
+        return settings.getString(LINK, "http://html5test.com/");
+    }
+
+    public void saveLink(String url) {
+        settings.edit().putString(LINK, url).apply();
+    }
+
+    public void cleanPerfomance() {
+        settings.edit().clear().apply();
     }
 }

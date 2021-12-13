@@ -1,18 +1,23 @@
 package dev.jocey.webviewgameserver.game;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.Random;
 
+import dev.jocey.webviewgameserver.MainActivity;
 import dev.jocey.webviewgameserver.R;
 
 public class GameActivity extends AppCompatActivity implements GameActivityContract {
@@ -28,14 +33,17 @@ public class GameActivity extends AppCompatActivity implements GameActivityContr
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
-        gamePresenter = new GamePresenter(getSharedPreferences("settings", MODE_APPEND), this);
+        gamePresenter = new GamePresenter(getSharedPreferences("settings", MODE_PRIVATE), this);
         init();
         updateScore();
         changeNums();
         check.setOnClickListener(view -> {
             if ((answer.getText().length() > 0) && (TextUtils.isDigitsOnly(answer.getText())))
                 gamePresenter.checkAnswer(firstNum.getText(), secondNum.getText(), answer.getText());
-            else Toast.makeText(this, "Please input correct answer", Toast.LENGTH_SHORT).show();
+            else {
+                answer.getText().clear();
+                Toast.makeText(this, "Please input correct answer", Toast.LENGTH_SHORT).show();
+            }
 
         });
 
@@ -70,5 +78,29 @@ public class GameActivity extends AppCompatActivity implements GameActivityContr
     @Override
     public void showItsWrong() {
         Toast.makeText(this, "Wrong!", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onBackPressed() {
+
+    }
+
+    @Override
+    protected void onStop() {
+        gamePresenter.saveSession("GAME");
+        super.onStop();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        menu.add(0, 0, 0, "First Start");
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        gamePresenter.cleanPreference();
+        startActivity(new Intent(this, MainActivity.class));
+        return super.onOptionsItemSelected(item);
     }
 }
