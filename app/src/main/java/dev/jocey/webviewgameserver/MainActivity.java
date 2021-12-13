@@ -20,7 +20,7 @@ public class MainActivity extends AppCompatActivity implements MainActivityContr
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        presenter = new MainPresenter(getSharedPreferences("settings", MODE_APPEND), this);
+        presenter = new MainPresenter(getSharedPreferences("settings", MODE_PRIVATE), this);
         if (presenter.isFirstStart()) presenter.getServerAnswer();
         else {
             if (presenter.getLastSession().equals("WEB")) startWebView();
