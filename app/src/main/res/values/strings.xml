@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">WebViewGameServer</string>
+    <string name="get_answer">Get Answer</string>
+    <string name="rules">Rules: One correct answer is 5 points.</string>
+    <string name="score">Score:</string>
+    <string name="plus">+</string>
+    <string name="equal">=</string>
+    <string name="check">Check</string>
+</resources>
