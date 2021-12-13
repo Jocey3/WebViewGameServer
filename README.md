@@ -3,13 +3,18 @@
 
 Server:
 
-import java.io.BufferedWriter;
-import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.net.ServerSocket;
-import java.net.Socket;
 
-public class Main {
+
+
+
+
+    import java.io.BufferedWriter;
+    import java.io.IOException;
+    import java.io.OutputStreamWriter;
+    import java.net.ServerSocket;
+    import java.net.Socket;
+    
+    public class Main {
     private static Socket clientSocket;
     private static BufferedWriter out;
     private static String answer = "false";
@@ -28,7 +33,7 @@ public class Main {
             }
         } catch (IOException e) {
             e.printStackTrace();
-        }
-    }
-}
+         }
+         }
+     }
 
